@@ -2,8 +2,8 @@ name: Keep GitHub Streak Alive
 
 on:
   schedule:
-    - cron: '0 23 * * *'  # jam 06:00 WIB (UTC+7)
-    - cron: '0 11 * * *'  # jam 18:00 WIB (UTC+7)
+    - cron: '0 23 * * *'  # 06:00 WIB
+    - cron: '0 11 * * *'  # 18:00 WIB
   workflow_dispatch:
 
 jobs:
@@ -13,10 +13,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Update dummy file
-        run: |
-          echo "Update: $(date)" >> keepalive.txt
+        run: echo "Update: $(date)" >> keepalive.txt
 
       - name: Commit and Push changes
         env:
