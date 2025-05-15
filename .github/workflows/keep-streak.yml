@@ -1,0 +1,27 @@
+name: Keep GitHub Streak Alive
+
+on:
+  schedule:
+    - cron: '0 23 * * *' 
+    - cron: '0 11 * * *' 
+  workflow_dispatch:
+
+jobs:
+  commit-streak:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update dummy file
+        run: |
+          echo "Update: $(date)" >> keepalive.txt
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "Abye Bot"
+          git config --global user.email "bot@abye.dev"
+          git add keepalive.txt
+          git commit -m "chore: keep streak alive" || echo "Nothing to commit"
+          git push
